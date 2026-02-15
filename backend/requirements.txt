@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+psycopg2-binary      # Postgres 使う想定
+python-dotenv        # .env使うなら
+alembic              # 後でマイグレーションに使う
+pydantic
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+email-validator    # メールアドレスバリデーション
+colorlog
+pytest
+httpx  # TestClientで不要な場合もあるが、導入しておくと将来便利)
+pydantic_settings

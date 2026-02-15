@@ -1,0 +1,15 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# 依存だけ先に入れてレイヤーキャッシュを効かせる
+COPY package*.json ./
+RUN npm ci
+
+# ソースをコピー
+COPY . .
+
+EXPOSE 5173
+
+# Vite dev server をコンテナ外(ホスト)から見えるように
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]

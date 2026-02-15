@@ -1,0 +1,30 @@
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+venv
+#  ↓本当はgit管理対象外だが、個人開発なのでいったん残しておく
+# .env
+# .env.*
+*.log
+
+# ---- FastAPI ----
+alembic/versions/*.pyc
+
+# ---- Node ----
+node_modules/
+dist/
+build/
+.vite/
+
+# ---- Docker ----
+*.pid
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- VSCode ----
+.vscode/
