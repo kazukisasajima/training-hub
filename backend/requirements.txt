@@ -12,3 +12,4 @@ colorlog
 pytest
 httpx  # TestClientで不要な場合もあるが、導入しておくと将来便利)
 pydantic_settings
+python-jose[cryptography]==3.4.0
