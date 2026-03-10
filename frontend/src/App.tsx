@@ -1,23 +1,22 @@
-import { useEffect, useState } from "react";
-import { apiGet } from "./shared/api/client";
-
-type Health = { status: string };
+import { useAuth } from "./features/auth/hooks/useAuth";
+import { LoginForm } from "./features/auth/components/LoginForm";
 
 export default function App() {
-  const [data, setData] = useState<Health | null>(null);
-  const [err, setErr] = useState<string | null>(null);
+  const { user, loading, signIn, signOut } = useAuth();
 
-  useEffect(() => {
-    apiGet<Health>("/api/health")
-      .then(setData)
-      .catch((e) => setErr(e.message));
-  }, []);
+  if (loading) return <p style={{ padding: 16 }}>loading...</p>;
+
+  if (!user) {
+    return <LoginForm onLogin={signIn} />;
+  }
 
   return (
     <div style={{ padding: 16 }}>
       <h1>training-hub</h1>
-      {err && <pre>{err}</pre>}
-      {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : <p>loading...</p>}
+      <p>Logged in as: {user.email}</p>
+      <button onClick={signOut}>Logout</button>
+
+      {/* ここに workouts 画面など */}
     </div>
   );
 }
