@@ -5,7 +5,7 @@ __pycache__/
 *.pyd
 *.sqlite3
 venv
-#  ↓本当はgit管理対象外だが、個人開発なのでいったん残しておく
+#  ↓本当はgit管理対象外だが、個人開発なので残しておく
 # .env
 # .env.*
 *.log
@@ -27,4 +27,5 @@ build/
 Thumbs.db
 
 # ---- VSCode ----
-.vscode/
+#  ↓本当はgit管理対象外だが、個人開発なので残しておく
+# .vscode/

@@ -4,7 +4,8 @@ WORKDIR /app
 
 # 依存だけ先に入れてレイヤーキャッシュを効かせる
 COPY package*.json ./
-RUN npm ci
+# RUN npm ci
+RUN npm install
 
 # ソースをコピー
 COPY . .
