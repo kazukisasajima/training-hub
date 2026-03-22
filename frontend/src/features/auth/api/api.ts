@@ -1,6 +1,6 @@
 import { apiGet, apiPostJson } from "../../../shared/api/client";
 
-export type MeResponse = { id: number; email: string };
+export type MeResponse = { id: number; email: string; name: string };
 
 export async function login(email: string, password: string) {
   return apiPostJson<{ ok: boolean }>("/api/auth/login", { email, password });
