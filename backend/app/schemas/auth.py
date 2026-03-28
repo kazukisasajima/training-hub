@@ -9,3 +9,8 @@ class LoginRequest(BaseModel):
 class MeResponse(BaseModel):
     user_id: UUID
     name: str
+
+class SignupRequest(BaseModel):
+    name: str
+    email: EmailStr
+    password: str

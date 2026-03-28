@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export function LoginForm(props: { onLogin: (email: string, password: string) => Promise<void> }) {
   const [email, setEmail] = useState("test@example.com");
@@ -25,7 +26,7 @@ export function LoginForm(props: { onLogin: (email: string, password: string) =>
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
 
         <h2 className="text-2xl font-bold text-center mb-6">
-          Login
+          ログイン
         </h2>
 
         {err && (
@@ -56,10 +57,22 @@ export function LoginForm(props: { onLogin: (email: string, password: string) =>
             disabled={loading}
             onClick={handleSubmit}
           >
-            {loading ? "Loading..." : "Login"}
+            {loading ? "Loading..." : "ログイン"}
           </button>
 
         </div>
+
+        {/* 👇 追加部分 */}
+        <div className="mt-6 text-center text-sm text-gray-600">
+          アカウントをお持ちでないですか？{" "}
+          <Link
+            to="/signup"
+            className="text-blue-600 hover:underline font-medium"
+          >
+            新規登録
+          </Link>
+        </div>
+
       </div>
 
     </div>

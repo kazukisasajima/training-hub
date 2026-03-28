@@ -1,12 +1,16 @@
-import { LoginForm } from "../components/LoginForm";
 import { useAuth } from "../hooks/useAuth";
-import { Navigate } from "react-router-dom";
+import { LoginForm } from "../components/LoginForm";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
-  const { user, loading, signIn } = useAuth();
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
 
-  // if (loading) return <p>loading...</p>;
-  if (user) return <Navigate to="/dashboard" replace />;
+  const handleLogin = async (email: string, password: string) => {
+    await signIn(email, password);
 
-  return <LoginForm onLogin={signIn} />;
+    navigate("/dashboard", { replace: true });
+  };
+
+  return <LoginForm onLogin={handleLogin} />;
 }
