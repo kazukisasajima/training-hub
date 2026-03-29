@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export function LoginForm(props: { onLogin: (email: string, password: string) => Promise<void> }) {
   const [email, setEmail] = useState("test@example.com");
-  const [password, setPassword] = useState("password");
+  const [password, setPassword] = useState("testpassword");
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 

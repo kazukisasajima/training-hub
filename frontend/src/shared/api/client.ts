@@ -17,7 +17,6 @@ async function handle<T>(res: Response): Promise<T> {
 export async function apiGet<T>(path: string): Promise<T> {
   const res = await fetch(path, {
     method: "GET",
-    // 同一オリジンなら省略でもOKだが、明示すると分かりやすい
     credentials: "include",
   });
   return handle<T>(res);
@@ -28,6 +27,22 @@ export async function apiPostJson<T>(path: string, body: unknown): Promise<T> {
 
   const res = await fetch(path, {
     method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(csrf ? { "X-CSRF-Token": csrf } : {}),
+    },
+    body: JSON.stringify(body),
+  });
+
+  return handle<T>(res);
+}
+
+export async function apiPatchJson<T>(path: string, body: unknown): Promise<T> {
+  const csrf = getCookie("csrf_token");
+
+  const res = await fetch(path, {
+    method: "PATCH",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",

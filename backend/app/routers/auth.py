@@ -1,14 +1,15 @@
 from sqlalchemy.orm import Session
 import os
 import secrets
-from fastapi import APIRouter, Depends, Response, HTTPException, Depends
+from fastapi import APIRouter, Depends, Response, HTTPException
 
-from app.schemas.auth import LoginRequest, MeResponse, SignupRequest
+from app.schemas.auth import LoginRequest, MeResponse, SignupRequest, UpdateMeRequest
 from app.schemas.user import UserCreate
 from app.core.security import create_access_token, verify_password, hash_password
 from app.crud.user import get_user_by_email, create_user
 from app.dependencies.auth import get_current_user
 from app.dependencies.db import get_db
+from app.dependencies.csrf import require_csrf
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -55,7 +56,32 @@ def login(body: LoginRequest, response: Response, db: Session = Depends(get_db))
 
 @router.get("/me", response_model=MeResponse)
 def me(user=Depends(get_current_user)):
-    return {"user_id": user.user_id, "name": user.name}
+    return {"user_id": user.user_id, "name": user.name, "email": user.email}
+
+
+@router.patch("/me", response_model=MeResponse)
+def update_me(
+    body: UpdateMeRequest,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user),
+    _=Depends(require_csrf),
+):
+    if body.email and body.email != user.email:
+        existing = get_user_by_email(db, email=body.email)
+        if existing:
+            raise HTTPException(status_code=400, detail="Email already registered")
+        user.email = body.email
+
+    if body.name is not None:
+        user.name = body.name
+
+    if body.password:
+        user.password = hash_password(body.password)
+
+    db.commit()
+    db.refresh(user)
+
+    return {"user_id": user.user_id, "name": user.name, "email": user.email}
 
 
 @router.post("/logout")

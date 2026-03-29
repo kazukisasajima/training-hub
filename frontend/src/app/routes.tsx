@@ -5,6 +5,7 @@ import WorkoutsPage from "../features/workouts/pages/WorkoutsPage";
 import Dashboard from "../shared/pages/Dashboard";
 import ProtectedRoute from "../features/auth/components/ProtectedRoute";
 import SignupPage from "../features/auth/pages/SignupPage";
+import ProfilePage from "../features/auth/pages/ProfilePage";
 
 export const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
@@ -12,12 +13,13 @@ export const router = createBrowserRouter([
   
   // 認証が必要なページ
   {
-    element: <ProtectedRoute />, 
+    element: <ProtectedRoute />,
     children: [
       { path: "/", element: <WorkoutsPage /> },
       { path: "/workouts", element: <WorkoutsPage /> },
       { path: "/workouts/new", element: <WorkoutCreatePage /> },
       { path: "/dashboard", element: <Dashboard /> },
+      { path: "/profile", element: <ProfilePage /> },
     ],
   },
 ]);
